@@ -1,0 +1,36 @@
+{
+  "name": "api-doc-generator",
+  "version": "0.0.0",
+  "description": "Utility tool to generate beautiful HTML documentation for REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guedjm/api-doc-generator.git"
+  },
+  "author": "Maxime Guedj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guedjm/api-doc-generator/issues"
+  },
+  "homepage": "https://github.com/guedjm/api-doc-generator#readme",
+  "dependencies": {
+    "html": "0.0.10",
+    "is-my-json-valid": "^2.13.1",
+    "jade": "^1.11.0",
+    "markdown": "^0.5.0",
+    "markdown-it": "^7.0.0",
+    "merge2": "^1.0.2",
+    "yamljs": "^0.2.8"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-tslint": "^5.0.0",
+    "gulp-typescript": "^2.13.6",
+    "tslint": "^3.13.0"
+  }
+}
