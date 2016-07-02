@@ -2,9 +2,9 @@ const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const lint = require('gulp-tslint');
 const clean = require('gulp-clean');
-const meger = require('merge2');
+const merge = require('merge2');
 
-gulp.task('', function () {
+gulp.task('default', function () {
 
 });
 
@@ -14,14 +14,11 @@ gulp.task('build', function () {
   const tsResult = tsProject.src()
     .pipe(ts(tsProject));
 
-  return merge([
-    tsResult.dts.pipe(gulp.dest('build')),
-    tsResult.js.pipe(gulp.dest('build'))
-  ])
+  return tsResult.js.pipe(gulp.dest('lib'));
 });
 
 gulp.task('clean', function () {
-  return gulp.src('./build', {read: false})
+  return gulp.src('./lib', {read: false})
     .pipe(clean());
 });
 

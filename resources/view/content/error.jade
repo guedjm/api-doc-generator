@@ -1,0 +1,26 @@
+
+mixin error(e)
+    tr
+        th(id="#{e.id}" class="response-error") !{e.status}
+        td !{e.code}
+        td !{e.subcode}
+        td !{e.message}
+        td !{e.fix}
+
+div(class="part")
+    h1(id="errors") Possible error response
+    hr
+    br
+
+    table(class="table table-striped")
+        thead
+            tr
+                th HTTP status
+                th Code
+                th SubCode
+                th Message
+                th Comment
+
+        tbody
+            each val in api.errors
+                +error(val)

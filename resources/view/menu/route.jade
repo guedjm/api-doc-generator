@@ -1,0 +1,19 @@
+mixin group(g)
+    li
+        a(href="##{g.id}") !{g.title}
+
+    if (g.sub.length > 0)
+        ul
+            each s in g.sub
+                +group(s)
+
+        br
+
+
+
+div(class="bloc")
+    h4
+        a(href="#api") API REFERENCE
+    ul
+        each group in api.routes.groups
+            +group(group)

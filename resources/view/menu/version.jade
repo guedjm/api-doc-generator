@@ -1,0 +1,22 @@
+
+mixin version(v, index, version)
+    li
+        if (v.version == version)
+            a(href="../v#{v.version}")
+                b v#{v.version}
+                if (index == 0)
+                    span(class="glyphicon glyphicon-arrow-left" style="margin-left: 5px")
+        else
+            a(href="../v#{v.version}") v!{v.version}
+            if (index == 0)
+                span(class="glyphicon glyphicon-arrow-left" style="margin-left: 5px")
+
+div(class="bloc")
+    h4
+        a(href="#changelog") CHANGELOG
+
+div(class="bloc" id="versionBlk")
+    h4
+        a(href="../index.html") VERSIONS
+
+    ul(id="versionList")

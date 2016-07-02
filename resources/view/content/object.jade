@@ -1,0 +1,15 @@
+
+mixin object(o)
+    h2(id="#{o.id}") !{o.name}
+    div(class="obj-description") !{o.description}
+
+    pre
+        code(class="prettyprint") !{o.getPrettyPrintedObj()}
+    br
+
+div(class="part")
+    h1(id="object") Objects
+    hr
+    br
+    each val in api.objects
+        +object(val)

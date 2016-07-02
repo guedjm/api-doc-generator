@@ -1,0 +1,18 @@
+mixin paragraph(p)
+    li
+        a(href="##{p.id}") !{p.title}
+
+        if (p.sub.length > 0)
+            ul
+                each s in p.sub
+                    +paragraph(s)
+
+div(class="bloc")
+    h4
+        a(href="#general") GENERAL
+
+    ul
+        each p in api.paragraphs
+            +paragraph(p)
+
+

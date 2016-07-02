@@ -8,13 +8,32 @@
     "removeComments": true,
     "noLib": false,
     "preserveConstEnums": true,
-    "outDir": "./build",
+    "outDir": "./lib",
     "rootDir": "./src",
     "declaration": true,
     "listFiles": true
   },
   "files": [
-
+    "./src/APIDocGenerator.ts",
+    "./src/model/apiDefinition.ts",
+    "./src/model/changeDescription.ts",
+    "./src/model/changelog.ts",
+    "./src/model/generatedFile.ts",
+    "./src/model/definition/apiError.ts",
+    "./src/model/definition/apiObject.ts",
+    "./src/model/definition/apiRoute.ts",
+    "./src/model/definition/group.ts",
+    "./src/model/definition/IDefinition.ts",
+    "./src/model/definition/method.ts",
+    "./src/model/definition/paragraph.ts",
+    "./src/model/definition/parameter.ts",
+    "./src/model/definition/response.ts",
+    "./src/model/definition/tag.ts",
+    "./src/model/definition/url.ts",
+    "./src/preprocessing/symbol.ts",
+    "./src/preprocessing/textFromatter.ts",
+    "./src/utils/definitionValidator.ts",
+    "./src/utils/yamlParser.ts",
     "./typings/index.d.ts"
   ]
 }

@@ -1,0 +1,13 @@
+
+mixin object(o)
+    li
+        a(href="##{o.id}") !{o.name}
+
+
+div(class="bloc")
+    h4
+        a(href="#object") OBJECTS
+
+    ul
+        each val in api.objects
+            +object(val)

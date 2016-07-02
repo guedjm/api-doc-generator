@@ -1,0 +1,13 @@
+
+mixin error(e)
+    li
+        a(href="##{e.id}") !{e.name}
+
+
+div(class="bloc")
+    h4
+        a(href="#errors") ERRORS
+
+    ul
+        each val in api.errors
+            +error(val)

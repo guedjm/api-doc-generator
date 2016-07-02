@@ -4,7 +4,7 @@
   "description": "Utility tool to generate beautiful HTML documentation for REST API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "istanbul cover _mocha -- test/test.js -R spec"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "markdown": "^0.5.0",
     "markdown-it": "^7.0.0",
     "merge2": "^1.0.2",
+    "ncp": "^2.0.0",
     "yamljs": "^0.2.8"
   },
   "devDependencies": {
@@ -32,5 +33,10 @@
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^2.13.6",
     "tslint": "^3.13.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "lib/",
+    "resources/"
+  ]
 }

@@ -1,0 +1,202 @@
+
+mixin group(g)
+    each val in g.sub
+        +group(val)
+
+    each val in g.url
+        +route(val)
+
+mixin route(r)
+    if r.get
+        +method(r, r.get, "primary")
+
+    if r.post
+        +method(r, r.post, "post")
+
+    if r.patch
+        +method(r, r.patch, "warning")
+
+    if r.put
+        +method(r, r.put, "info")
+
+    if r.delete
+        +method(r, r.delete, "danger")
+
+mixin method(r, m, color)
+    div(id="#{m.id}" class="panel panel-#{color} method-bloc")
+        div(class="panel-heading")
+            div(class="row")
+                div(class="col-sm-5") !{m.meth.toUpperCase()} !{r.url}
+                div(class="cal-sm-7 tag-line")
+                    each val in m.tags
+                        - var t = api.getTagInfo(val)
+                        div(class="label #{t.label} tag")
+                            a(href="##{t.value}" style="color: white") #{t.name}
+
+        div(class="panel-body")
+
+            div(class="method-summary method-component") !{m.summary}
+
+            div(class="method-description method-component") !{m.description}
+
+            if (m.parameters.length > 0)
+                div(class="method-component")
+                    h3 Parameters
+                    table(class="table table-striped")
+                        thead
+                            tr
+                                th Name
+                                th Description
+                                th Required
+                                th In
+                                th Schema
+
+                        tbody
+                            each val in m.parameters
+                                tr
+                                    td !{val.name}
+                                    td !{val.description}
+                                    td !{val.required.toString()}
+                                    td !{val.in}
+                                    if (val.type == "string" || val.type == "int" || val.type == "bool")
+                                        td !{val.type}
+                                    else
+                                        - var obj = api.getObjectInfo(val.type);
+                                        td
+                                            a(href="##{obj.link}") #{obj.name}
+
+            if (m.responses.length > 0)
+                div(class="method-component")
+                    h3 Responses
+                    table(class="table table-striped")
+                        thead
+                            tr
+                                th Http Status Code
+                                th Description
+                                th Schema
+
+                        tbody
+                            each val in m.responses
+                                tr
+                                    - var statusClass = (val.code >= 200 && val.code < 300 ? "response-ok" : "response-error");
+                                    th(class="#{statusClass}") !{val.code}
+                                    td !{val.description}
+                                    if (val.type == "string" || val.type == "int" || val.type == "bool")
+                                        td !{val.type}
+                                    else
+                                        - var obj = api.getObjectInfo(val.type);
+                                        td
+                                            a(href="##{obj.link}") #{obj.name}
+
+            if (m.errors.length > 0)
+                div(class="method-component")
+                    h3 Errors
+                    table(class="table table-striped")
+                        thead
+                            tr
+                                th HTTP status
+                                th Code
+                                th SubCode
+                                th Message
+                                th Comment
+
+                        tbody
+                            each val in m.errors
+                                tr
+                                    - var err = api.getErrorInfo(val);
+                                    th(class="response-error") #{err.status}
+                                    td !{err.code}
+                                    td !{err.subcode}
+                                    td !{err.message}
+                                    td !{err.fix}
+
+
+mixin apiRefTableUrl(urls)
+    table(class="table table-striped")
+        thead
+            tr
+                th Method
+                th Endpoint
+                th Description
+        tbody
+            each url in urls
+                if (url.title == undefined)
+                    if url.get
+                        tr
+                            td
+                                span(class="label label-primary") GET
+
+                            td !{url.url}
+                            td
+                                a(href="##{url.get.id}") !{url.get.summary}
+
+                    if url.post
+                        tr
+                            td
+                                span(class="label label-success") POST
+
+                            td !{url.url}
+                            td
+                                a(href="##{url.post.id}") !{url.post.summary}
+
+                    if url.patch
+                        tr
+                            td
+                                span(class="label label-warning") PATCH
+
+                            td !{url.url}
+                            td
+                                a(href="##{url.patch.id}") !{url.patch.summary}
+
+                    if url.put
+                        tr
+                            td
+                                span(class="label label-info") PUT
+
+                            td !{url.url}
+                            td
+                                a(href="##{url.put.id}") !{url.put.summary}
+
+                    if url.delete
+                        tr
+                            td
+                                span(class="label label-danger") DELETE
+
+                            td !{url.url}
+                            td
+                                a(href="##{url.delete.id}") !{url.delete.summary}
+
+
+mixin apiRefTableGroup(group)
+    div(class="path-group")
+        h2(id="#{group.id}") #{group.title}
+        p !{group.text}
+
+        each val in group.sub
+            +apiRefTableGroup(val)
+
+        if (group.url.length > 0)
+            +apiRefTableUrl(group.url)
+
+mixin apiRefTable(routes)
+    each group in routes.groups
+        +apiRefTableGroup(group)
+
+    if (routes.urls.length > 0)
+        +apiRefTableUrl(routes)
+
+
+div(class="part")
+    h1(id="api") API Reference
+    hr
+    br
+    +apiRefTable(api.routes)
+    br
+    br
+
+
+    each group in api.routes.groups
+        +group(group)
+
+    each val in api.routes.urls
+        +route(val)

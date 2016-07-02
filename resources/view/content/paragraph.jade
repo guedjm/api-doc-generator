@@ -1,0 +1,22 @@
+
+mixin paragraph(p, dept)
+    if (dept == 0)
+        div(class="paragraph-header")
+            h2(id="#{p.id}") #{p.title}
+            p !{p.text}
+            each val in p.sub
+                +paragraph(val, dept + 1)
+    else
+        div(class="paragraph")
+            h3(id="#{p.id}") #{p.title}
+            p !{p.text}
+
+            each val in p.sub
+                +paragraph(val, dept + 1)
+
+div(class="part")
+    h1(id="general") General
+    hr
+
+    each val in api.paragraphs
+        +paragraph(val, 0)

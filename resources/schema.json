@@ -1,0 +1,350 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "$ref": "#/definitions/api"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "api"
+      ]
+    },
+    "api": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "paragraphs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/paragraph"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tag"
+          }
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/route"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/error"
+          }
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/object"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "paragraph": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z- /&]+$": {
+          "$ref": "#/definitions/paragraph-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "paragraph-data": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "sub": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/paragraph"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "text"
+      ]
+    },
+    "tag": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z0-9- ]+$": {
+          "$ref": "#/definitions/tag-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tag-data": {
+      "type": "object",
+      "properties": {
+        "link": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "route": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z- ]+$": {
+          "$ref": "#/definitions/group-data"
+        },
+        "^/[a-zA-Z0-9-/{}_]+$": {
+          "$ref": "#/definitions/method-type"
+        }
+      },
+      "additionalProperties": false
+    },
+    "group-data": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "sub": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/group"
+          }
+        },
+        "url": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/url"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "text"
+      ]
+    },
+    "group": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z- ]+$": {
+          "$ref": "#/definitions/group-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "method-type": {
+      "type": "object",
+      "properties": {
+        "get": {
+          "$ref": "#/definitions/method"
+        },
+        "post": {
+          "$ref": "#/definitions/method"
+        },
+        "patch": {
+          "$ref": "#/definitions/method"
+        },
+        "put": {
+          "$ref": "#/definitions/method"
+        },
+        "delete": {
+          "$ref": "#/definitions/method"
+        }
+      },
+      "additionalProperties": false
+    },
+    "method": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/param"
+          }
+        },
+        "responses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/response"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "summary"
+      ]
+    },
+    "param": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z- _]+$": {
+          "$ref": "#/definitions/param-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "param-data": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "in": {
+          "enum": [
+            "body",
+            "query"
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "description",
+        "required",
+        "in",
+        "type"
+      ]
+    },
+    "response": {
+      "type": "object",
+      "patternProperties": {
+        "^[0-9]{3}$": {
+          "$ref": "#/definitions/response-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "response-data": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "description",
+        "type"
+      ]
+    },
+    "url": {
+      "type": "object",
+      "patternProperties": {
+        "^/[a-zA-Z0-9-/{}_]+$": {
+          "$ref": "#/definitions/method-type"
+        }
+      },
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z- ]+$": {
+          "$ref": "#/definitions/error-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "error-data": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "integer"
+        },
+        "subcode": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "fix": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "code",
+        "message"
+      ]
+    },
+    "object": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z- ]+$": {
+          "$ref": "#/definitions/object-data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "object-data": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "obj": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "array"
+            }]
+        }
+      },
+      "required": [
+        "description",
+        "obj"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

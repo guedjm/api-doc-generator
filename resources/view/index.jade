@@ -1,0 +1,54 @@
+doctype html
+html
+    head
+        title !{api.name}
+
+        link(rel="stylesheet" type="text/css" href="../css/bootstrap.min.css")
+        link(rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css")
+        link(rel="stylesheet" type="text/css" href="../css/uber-font.css")
+        link(rel="stylesheet" type="text/css" href="../css/style.css")
+
+        script(src="../js/jquery-1.12.0.min.js")
+        script(src="../js/bootstrap.min.js")
+        script(src="../js/doc.js")
+        script.
+            var cV = "#{version}";
+            $(document).ready(function () {
+                setTimeout(loadVersions, 500);
+            });
+
+    body
+        header(class="header")
+            div(class="container")
+                div
+                    a(class="header-link" href="../index.html")
+                        h4 !{api.name}
+                            span(class="version") v !{version}
+
+        div(class="container page-layout")
+            div(class="page_content")
+                div(class="row")
+
+                    // Menu
+                    div(class="col-sm-3 border-right section-left")
+                        div(class="sidebar-nav")
+                            include ./menu/paragraph
+                            include ./menu/route
+                            include ./menu/object
+                            include ./menu/error
+                            include ./menu/version
+
+                    // Content
+                    div(class="col-sm-9 border-left section-right")
+
+                        div(class="doc-content")
+
+                            include ./content/paragraph
+                            include ./content/route
+                            include ./content/object
+                            include ./content/error
+                            include ./content/changelog
+
+
+
+
