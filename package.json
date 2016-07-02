@@ -17,13 +17,12 @@
   },
   "homepage": "https://github.com/guedjm/api-doc-generator#readme",
   "dependencies": {
+    "fs-extra": "^0.30.0",
     "html": "0.0.10",
     "is-my-json-valid": "^2.13.1",
     "jade": "^1.11.0",
     "markdown": "^0.5.0",
     "markdown-it": "^7.0.0",
-    "merge2": "^1.0.2",
-    "ncp": "^2.0.0",
     "yamljs": "^0.2.8"
   },
   "devDependencies": {

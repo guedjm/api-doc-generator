@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const lint = require('gulp-tslint');
 const clean = require('gulp-clean');
-const merge = require('merge2');
 
 gulp.task('default', function () {
 

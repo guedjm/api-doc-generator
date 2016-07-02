@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const ncp = require('ncp');
+const fse = require('fs-extra');
 const apiDocGenrerator = require('./lib/APIDocGenerator').APIDocGenerator;
 
 function generateDocumentation (definitionPath,
@@ -18,25 +18,17 @@ function generateDocumentation (definitionPath,
 
   const generatedFiles = docGen.generate(currentVersion);
 
-  try {
-    fs.accessSync(destinationDirectory);
-  } catch (e) {
-    fs.mkdirSync(destinationDirectory);
-  }
+  fse.ensureDirSync(destinationDirectory);
 
   generatedFiles.forEach(function (generatedFile) {
     const containingDir = path.dirname(path.join(destinationDirectory, generatedFile.path));
 
-    try {
-      fs.accessSync(containingDir);
-    } catch (e) {
-      fs.mkdirSync(containingDir);
-    }
+    fse.ensureDirSync(containingDir);
 
     fs.writeFileSync(path.join(destinationDirectory, generatedFile.path), generatedFile.content);
   });
 
-  ncp(docGen.publicDir, destinationDirectory, {clobber: false}, function (err) {
+  fse.copy(docGen.publicDir, destinationDirectory, function (err) {
     callback(err);
   });
 }
