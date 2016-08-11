@@ -1,0 +1,90 @@
+api:
+  name: Spred Developer service
+  description: |
+    The developer service of the Spred api allows developers to create clients for the OAuth2 authentication.;;;
+    It is available here: {{dev.sharemyscreen.fr:3000!http://dev.sharemyscreen.fr:3000}};;;
+    The **login** service documentation will be available here {{login.sharemyscreen.fr:3000/doc!http://login.sharemyscreen.fr:3000/doc}}
+  paragraphs:
+    -
+      Information:
+        text: |
+          The developer service of the Spred api allows developer to create clients for the OAuth2 authentication.;;;
+          As explained in the RFC, creating a client a compulsory to use the OAuth2;;;
+          Once your client created, save the *key* and the *secret* value, they will be usefull to authenticated your request to the {{login service!http://login.sharemyscreen.fr:3000/doc}}
+    -
+      Request and Reply format:
+        text: |
+          All requests must be **HTTP** request.;;;
+          Request body must be **JSON** formated;;;
+          Reply are **JSON** formated object in **snake_case**
+  routes:
+    -
+      /v1/clients:
+        post:
+          summary: Create a new client
+          description: This request create a new client
+          parameters:
+            -
+              name:
+                description: New client name
+                in: body
+                type: string
+                required: true
+          responses:
+            -
+              201:
+                description: Client created
+                type: Client
+          errors:
+            - Invalid request
+            - Client exist
+        get:
+          summary: Get all clients
+          description: This request return all the created clients
+          responses:
+            -
+              200:
+                description: Array of clients
+                type: Client array
+  errors:
+    -
+      Invalid request:
+        status: 400
+        code: 1
+        message: Invalid request
+        fix: Check the request parameters twice
+    -
+      Client exist:
+        status: 403
+        code: 1
+        subcode: 1
+        message: Client exists
+        fix: Change the client name
+
+  objects:
+    -
+      Error:
+        description: Error object (sub_code is facultative)
+        obj:
+          code: 0
+          sub_code: 0
+          message: ""
+    -
+      Client:
+        description: Client object
+        obj:
+          name: ""
+          key: ""
+          secret: ""
+          created_at: ""
+          updated_at: ""
+    -
+      Client Array:
+        description: Client array
+        obj:
+          -
+            name: ""
+            key: ""
+            secret: ""
+            created_at: ""
+            updated_at: ""
